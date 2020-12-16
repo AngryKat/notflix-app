@@ -30,7 +30,7 @@ public class UserM {
     }
 
     @JsonIgnore
-    @ManyToMany
+    @ManyToMany(cascade = {CascadeType.ALL})
     @JoinTable(
             name = "user_likes_movie",
             joinColumns = @JoinColumn(name = "user_id"),

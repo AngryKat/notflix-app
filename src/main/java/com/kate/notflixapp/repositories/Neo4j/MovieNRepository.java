@@ -7,6 +7,6 @@ import org.springframework.data.neo4j.repository.Neo4jRepository;
  * @author Jennifer Reif
  */
 public interface MovieNRepository extends Neo4jRepository<MovieN, Long> {
-    Iterable<MovieN> findByTitle(String title);
+    MovieN findByTitle(String title);
 
 }

@@ -16,6 +16,7 @@ public class MovieM {
     private String title;
     private int released;
     private String description;
+    private String image_id;
     @JsonIgnore
     @ManyToMany(mappedBy = "likedMovies")
     Set<UserM> likes;
@@ -33,10 +34,19 @@ public class MovieM {
     public MovieM() {
     }
 
-    public MovieM(String title, int released, String tagline) {
+    public MovieM(String title, int released, String tagline, String image_id) {
         this.title = title;
         this.released = released;
         this.description = tagline;
+        this.image_id = image_id;
+    }
+
+    public String getImage_id() {
+        return image_id;
+    }
+
+    public void setImage_id(String image_id) {
+        this.image_id = image_id;
     }
 
     public Long getId() {

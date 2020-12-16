@@ -1,5 +1,6 @@
 package com.kate.notflixapp.service;
 
+import com.kate.notflixapp.domainClasses.Neo4j.MovieN;
 import com.kate.notflixapp.repositories.Mysql.UserMRepository;
 import com.kate.notflixapp.domainClasses.Mysql.MovieM;
 import com.kate.notflixapp.domainClasses.Mysql.UserM;
@@ -16,6 +17,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -64,13 +66,18 @@ public class UserService implements IUserService, UserDetailsService {
     }
 
     @Override
-    public Iterable<UserM> getAllUsers() {
+    public List<UserM> getAllUsers() {
         return userMRepository.findAll();
     }
 
     @Override
-    public Iterable<MovieM> getMoviesOfUser(Long id) {
+    public List<MovieM> getMoviesOfUser(Long id) {
         return userMRepository.getLikedMoviesByUserId(id);
+    }
+
+    @Override
+    public List<MovieN> getRecommendedMovies(String username) {
+        return userNRepository.getMoviesRecommendedUser(username);
     }
 
     @Override
@@ -78,13 +85,42 @@ public class UserService implements IUserService, UserDetailsService {
         return userMRepository.findByUsername(s);
     }
 
+    @Override
+    public UserN findByUsernameNeo(String s) {
+        return userNRepository.findUserByUsername(s);
+    }
+
+    @Override
+    public void addMovie(MovieN m, UserN u) {
+            u.getLikes().add(m);
+            userNRepository.save(u);
+    }
+
+    @Override
+    public void addMovie(MovieM m, UserM u) {
+            u.getMovies().add(m);
+            userMRepository.save(u);
+    }
+
+    @Override
+    public void removeMovie(MovieM m, UserM u) {
+        u.getMovies().remove(m);
+        log.log(Level.INFO,""+u.getMovies().contains(m));
+        userMRepository.save(u);
+    }
+
+    @Override
+    public void removeMovieN(MovieN m, UserN u) {
+        u.getLikes().remove(m);
+        log.log(Level.INFO,""+u.getLikes().contains(m));
+        userNRepository.save(u);
+
+    }
+
 
     @Override
     public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
         UserM user = userMRepository.findByUsername(s);
-        log.log(Level.INFO, "got to loadUserByUsername");
-        log.log(Level.INFO, ""+user.getUsername());
-        log.log(Level.INFO, ""+user.getPassword());
         if (user == null) {
             throw new UsernameNotFoundException(s);
         }

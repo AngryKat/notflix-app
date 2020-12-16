@@ -19,6 +19,7 @@ public class MovieN {
 
     private String title;
     private int released;
+    private String image_id;
 
     @JsonIgnoreProperties("movie")
     @Relationship(type = "LIKES", direction = INCOMING)
@@ -31,6 +32,26 @@ public class MovieN {
     public MovieN(String title, int released) {
         this.title = title;
         this.released = released;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getImage_id() {
+        return image_id;
+    }
+
+    public void setImage_id(String image_id) {
+        this.image_id = image_id;
+    }
+
+    public List<UserN> getUsers() {
+        return users;
+    }
+
+    public void setUsers(List<UserN> users) {
+        this.users = users;
     }
 
     public Long getId() {

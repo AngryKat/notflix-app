@@ -5,7 +5,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface MovieMRepository extends JpaRepository<MovieM, Long> {
 
-    Iterable<MovieM> findByTitle(String title);
+    MovieM findByTitle(String title);
 
 
 

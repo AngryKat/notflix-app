@@ -7,6 +7,8 @@ import com.kate.notflixapp.repositories.Neo4j.MovieNRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class MovieService implements IMovieService {
     @Autowired
@@ -26,12 +28,12 @@ public class MovieService implements IMovieService {
     }
 
     @Override
-    public Iterable<MovieN> getMovieByTitleFromNeo(String title) {
+    public MovieN getMovieByTitleFromNeo(String title) {
         return mNrepo.findByTitle(title);
     }
 
     @Override
-    public Iterable<MovieM> getMovieByTitleFromMysql(String title) {
+    public MovieM getMovieByTitleFromMysql(String title) {
         return mMrepo.findByTitle(title);
     }
 
@@ -47,7 +49,7 @@ public class MovieService implements IMovieService {
     }
 
     @Override
-    public Iterable<MovieM> getAllMovies() {
+    public List<MovieM> getAllMovies() {
         return mMrepo.findAll();
     }
 }

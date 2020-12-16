@@ -5,10 +5,10 @@ import org.neo4j.ogm.annotation.GeneratedValue;
 import org.neo4j.ogm.annotation.Id;
 import org.neo4j.ogm.annotation.NodeEntity;
 import org.neo4j.ogm.annotation.Relationship;
+import org.springframework.data.neo4j.annotation.QueryResult;
 
 import java.util.ArrayList;
 import java.util.List;
-
 @NodeEntity(label="User")
 public class UserN {
     @Id
@@ -19,6 +19,15 @@ public class UserN {
 
     @Relationship(type = "LIKES")
     private List<MovieN> likes = new ArrayList<>();
+
+
+    public List<MovieN> getLikes() {
+        return likes;
+    }
+
+    public void setLikes(List<MovieN> likes) {
+        this.likes = likes;
+    }
 
     public UserN() {
     }
